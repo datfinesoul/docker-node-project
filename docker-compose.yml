@@ -19,3 +19,21 @@ services:
         volume:
           nocopy: true
         read_only: true
+  web:
+    build:
+      context: ./web/
+    container_name: web
+    environment:
+      NODE_ENV: development
+    entrypoint: ["npm", "run", "dev"]
+    volumes:
+      # The ./web/src dir is mounted in the container
+      # which means changes to package.json still require
+      # a rebuild. This is intentional to make sure the
+      # correct node_modules are installed
+      - type: "bind"
+        source: "./web/src"
+        target: "/web/src"
+        volume:
+          nocopy: true
+        read_only: true
