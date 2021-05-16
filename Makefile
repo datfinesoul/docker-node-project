@@ -1,24 +1,25 @@
+project = docker-node-project
 main: run
 
 run: build
 	docker run \
 		--rm \
 		-p 10000:5000/tcp \
-		"z-ro-app:latest"
+		"$(project):latest"
 
 build:
 	docker build \
-		-t "z-ro-app:latest" \
+		-t "$(project):latest" \
 		.
 
 rebuild:
 	docker build \
 		--no-cache \
-		-t "z-ro-app:latest" \
+		-t "$(project):latest" \
 		.
 
 save: build
-	docker save "z-ro-app:latest" -o "z-ro-app.tar"
+	docker save "$(project):latest" -o "$(project).tar"
 
 lint:
 	docker pull "github/super-linter:latest"

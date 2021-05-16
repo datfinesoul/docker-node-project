@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./app/
+    container_name: app
+    environment:
+      NODE_ENV: development
+    entrypoint: ["npm", "run", "dev"]
+    volumes:
+      # The ./app/src dir is mounted in the container
+      # which means changes to package.json still require
+      # a rebuild. This is intentional to make sure the
+      # correct node_modules are installed
+      - type: "bind"
+        source: "./app/src"
+        target: "/app/src"
+        volume:
+          nocopy: true
+        read_only: true
