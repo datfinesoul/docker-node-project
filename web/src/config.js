@@ -1,6 +1,6 @@
 module.exports = async () => {
-  const { readFile } = require('fs/promises');
-  //const ref = await readFile('./.ref.json', 'utf8')
+  // const { readFile } = require('fs/promises')
+  // const ref = await readFile('./.ref.json', 'utf8')
   //  .then(JSON.parse)
   //  .catch(error => {
   //    console.error(error);
@@ -16,6 +16,6 @@ module.exports = async () => {
     port: process.env.PORT || 3000,
 
     sha: process.env.GITHUB_SHA || 'unknown'
-    //sha: ref?.sha || process.env.GITHUB_SHA || 'unknown'
-  };
-};
+    // sha: ref?.sha || process.env.GITHUB_SHA || 'unknown'
+  }
+}

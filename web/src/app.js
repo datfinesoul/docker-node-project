@@ -1,26 +1,19 @@
 module.exports = config => {
-  const express = require('express');
-  const bodyParser = require('body-parser');
+  const express = require('express')
+  const bodyParser = require('body-parser')
 
-
-  if (typeof configured !== 'undefined') {
-    return configured;
-  }
-
-  configured = true;
-  for (let key in config) {
+  for (const key in config) {
     if (typeof config[key] === 'undefined') {
-      configured = false;
-      throw new Error(`${key} is not configured`);
+      throw new Error(`${key} is not configured`)
     }
   }
 
-  const app = express();
+  const app = express()
 
   // parse application/json
   app.use(bodyParser.json({
     strict: true
-  }));
+  }))
 
   app.use((err, req, res, next) => {
     if (err?.type === 'entity.parse.failed') {
@@ -28,10 +21,10 @@ module.exports = config => {
         status: 'fail',
         reason: err.type,
         sha: config.sha
-      });
+      })
     }
-    return next(err);
-  });
+    return next(err)
+  })
 
   /**
    * Your app must have a basic healthcheck. It should be very lightweight.
@@ -46,16 +39,16 @@ module.exports = config => {
     return res.status(200).json({
       status: 'up',
       sha: config.sha
-    });
-  });
+    })
+  })
 
   app.post('/log', async (req, res) => {
-    console.log(JSON.stringify({ '_ts': Date.now(), ...req.body }, null, 0));
+    console.log(JSON.stringify({ _ts: Date.now(), ...req.body }, null, 0))
     return res.status(200).json({
       status: 'okay',
       sha: config.sha
-    });
-  });
+    })
+  })
 
-  return app;
-};
+  return app
+}
