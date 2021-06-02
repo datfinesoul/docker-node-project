@@ -1,8 +1,10 @@
 FROM node:lts-alpine3.13
 
+COPY --chown=node:node . /app/
 WORKDIR /app
 
-COPY . .
+USER node
+
 RUN npm install
 	#&& cat .git/HEAD \
 	#| cut -d' ' -f2 \

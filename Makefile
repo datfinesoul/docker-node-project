@@ -39,4 +39,8 @@ else
 	@echo No file provided
 endif
 
-.PHONY: main run build rebuild save web lint line_one start stop
+hado:
+	docker run --rm -i hadolint/hadolint < ./app/Dockerfile
+	docker run --rm -i hadolint/hadolint < ./web/Dockerfile
+
+.PHONY: main run build rebuild save web lint line_one hado
