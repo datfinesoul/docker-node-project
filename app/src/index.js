@@ -1,6 +1,6 @@
 (async () => {
   const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-  const NUMBER_OF_WORKERS = 3
+  const NUMBER_OF_WORKERS = 2
   const data = 'Falsches Üben von Xylophonmusik quält jeden größeren Zwerg'
 
   const workers = new Array(NUMBER_OF_WORKERS).fill(Array.from(data).entries())

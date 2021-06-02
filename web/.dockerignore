@@ -1,1 +1,4 @@
-../.dockerignore
+node_modules/
+.git/
+!.git/HEAD
+!.git/refs/heads/
