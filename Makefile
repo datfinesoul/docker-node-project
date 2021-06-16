@@ -1,6 +1,13 @@
 project = docker-node-project
-main: run
+main: up
 
+up:
+	docker-compose up --build
+
+shell:
+	docker-compose exec app sh
+
+# OLD: Start
 run: build
 	docker run \
 		--rm \
@@ -20,6 +27,7 @@ rebuild:
 
 save: build
 	docker save "$(project):latest" -o "$(project).tar"
+# OLD: End
 
 lint:
 	docker pull "github/super-linter:latest"
@@ -43,4 +51,12 @@ hado:
 	docker run --rm -i hadolint/hadolint < ./app/Dockerfile
 	docker run --rm -i hadolint/hadolint < ./web/Dockerfile
 
-.PHONY: main run build rebuild save web lint line_one hado
+.PHONY: main \
+	run \
+	build \
+	rebuild \
+	save \
+	lint \
+	line_one \
+	hado up \
+	shell
