@@ -1,14 +1,5 @@
+const axios = require('axios')
 const sleep = t => new Promise(resolve => setTimeout(resolve, t))
-
-/*
- * Random Number Generator
- */
-function getRandomIntInclusive (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  // The maximum is inclusive and the minimum is inclusive
-  return Math.floor(Math.random() * (max - min + 1) + min)
-};
 
 /*
  * Concurrency control method
@@ -33,25 +24,25 @@ const doWork = async ({ numWorkers = 1, assignments, plan }) => {
  */
 const sleepAndLog = async (task, worker, index) => {
   const now = new Date()
-  // wait 50 - 500 milliseconds
-  await sleep(getRandomIntInclusive(1, 10) * 50)
+  const payload = encodeURIComponent(task)
+  const result = await axios(`http://web:7778/echo/?v=${payload}`)
+  const {v: item} = result.data
   // if ([5, 10, 17].includes(index)) {
   //  throw new Error('test');
   // }
-  console.log(`worker='${worker}' itemnum='${index}' item='${task}' duration='${(new Date()) - now}'`)
-  return task
+  console.log(`worker='${worker}' itemnum='${index}' item='${item}' duration='${(new Date()) - now}'`)
+  return item
 }
 
 /*
  * Main
  */
 (async () => {
-  // const data = 'Falsches Üben von Xylophonmusik quält jeden größeren Zwerg';
-  const data = 'Falsches'
+  const data = 'Falsches Üben von Xylophonmusik quält jeden größeren Zwerg';
   const result = await doWork({
     numWorkers: 3,
     assignments: data,
     plan: sleepAndLog
   })
-  console.log(result)
+  console.log(result.join(''))
 })()
