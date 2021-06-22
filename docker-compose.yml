@@ -19,7 +19,7 @@ services:
         source: "./app/src"
         target: "/app/src"
         volume:
-          nocopy: true
+          nocopy: true # don't copy container files to host volume
         read_only: true
   web:
     build:
@@ -37,5 +37,5 @@ services:
         source: "./web/src"
         target: "/web/src"
         volume:
-          nocopy: true
+          nocopy: true # don't copy container files to host volume
         read_only: true
