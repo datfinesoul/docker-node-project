@@ -12,6 +12,12 @@ prebuild:
 shell:
 	docker-compose exec app sh
 
+test:
+	@echo -n "healthcheck: "
+	@curl 'http://localhost:12000/healthcheck'
+	@echo -en "\ntoken: "
+	@curl 'http://localhost:12000/token'
+
 lint:
 	docker pull "github/super-linter:latest"
 	docker run \
@@ -40,4 +46,5 @@ hado:
 	hado \
 	up \
 	shell \
-	prebuild
+	prebuild \
+	test

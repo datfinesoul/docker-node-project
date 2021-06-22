@@ -36,7 +36,7 @@ services:
       # correct node_modules are installed
       - type: "bind"
         source: "./web/src"
-        target: "/web/src"
+        target: "/app/src"
         volume:
           nocopy: true # don't copy container files to host volume
         read_only: true
