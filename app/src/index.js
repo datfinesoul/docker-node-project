@@ -1,5 +1,8 @@
 const axios = require('axios')
 const sleep = t => new Promise(resolve => setTimeout(resolve, t))
+const jsonlog = v => console.log(JSON.stringify({
+  ...{_ts: (new Date()).getTime()}, ...v
+}, null, 0))
 
 /*
  * Concurrency control method
@@ -30,7 +33,9 @@ const sleepAndLog = async (task, worker, index) => {
   // if ([5, 10, 17].includes(index)) {
   //  throw new Error('test');
   // }
-  console.log(`worker='${worker}' itemnum='${index}' item='${item}' duration='${(new Date()) - now}'`)
+  jsonlog({
+    worker, index, item, duration: (new Date()) - now
+  })
   return item
 }
 
@@ -44,5 +49,5 @@ const sleepAndLog = async (task, worker, index) => {
     assignments: data,
     plan: sleepAndLog
   })
-  console.log(result.join(''))
+  jsonlog({result: result.join('')})
 })()

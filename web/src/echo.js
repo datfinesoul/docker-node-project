@@ -1,4 +1,7 @@
 const sleep = t => new Promise(resolve => setTimeout(resolve, t))
+const jsonlog = v => console.log(JSON.stringify({
+  ...{_ts: (new Date()).getTime()}, ...v
+}, null, 0))
 
 /*
  * Random Number Generator
@@ -21,7 +24,7 @@ module.exports = config => {
   })
 
   router.get('/', async(req, res) => {
-    console.log({ query: req.query })
+    jsonlog({ query: req.query })
     // wait 25 - 250 milliseconds
     await sleep(getRandomIntInclusive(1, 10) * 25)
     return res.status(200).json(req.query);
