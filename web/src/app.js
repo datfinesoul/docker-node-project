@@ -50,7 +50,7 @@ module.exports = config => {
     })
   })
 
-  app.use('/token', require('./token')(config))
+  app.use('/echo', require('./echo')(config))
 
   return app
 }
