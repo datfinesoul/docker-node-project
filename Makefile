@@ -1,33 +1,16 @@
+SHELL=/bin/bash
 project = docker-node-project
 main: up
 
 up:
 	docker-compose up --build
 
+prebuild:
+	npx standard --fix app/
+	npx standard --fix web/
+
 shell:
 	docker-compose exec app sh
-
-# OLD: Start
-run: build
-	docker run \
-		--rm \
-		-p 10000:5000/tcp \
-		"$(project):latest"
-
-build:
-	docker build \
-		-t "$(project):latest" \
-		.
-
-rebuild:
-	docker build \
-		--no-cache \
-		-t "$(project):latest" \
-		.
-
-save: build
-	docker save "$(project):latest" -o "$(project).tar"
-# OLD: End
 
 lint:
 	docker pull "github/super-linter:latest"
@@ -52,11 +35,9 @@ hado:
 	docker run --rm -i hadolint/hadolint < ./web/Dockerfile
 
 .PHONY: main \
-	run \
-	build \
-	rebuild \
-	save \
 	lint \
 	line_one \
-	hado up \
-	shell
+	hado \
+	up \
+	shell \
+	prebuild

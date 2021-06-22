@@ -1,4 +1,4 @@
-const sleep = t => new Promise(rs => setTimeout(rs, t))
+const sleep = t => new Promise(resolve => setTimeout(resolve, t))
 
 /*
  * Random Number Generator

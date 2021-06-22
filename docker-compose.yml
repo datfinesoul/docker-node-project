@@ -27,6 +27,7 @@ services:
     container_name: web
     environment:
       NODE_ENV: development
+      PORT: 7778
     entrypoint: ["npm", "run", "dev"]
     volumes:
       # The ./web/src dir is mounted in the container
@@ -39,3 +40,8 @@ services:
         volume:
           nocopy: true # don't copy container files to host volume
         read_only: true
+    ports:
+      - target: 7778
+        published: 12000
+        protocol: tcp
+        mode: host
